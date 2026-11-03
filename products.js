@@ -5,7 +5,7 @@
 
 const STORE = {
   name: "Tea Island",
-  whatsapp: "94715527755",     // international format, no + or spaces (0715527755 -> 94715527755)
+  whatsapp: "94716556155",     // international format, no + or spaces (0716556155 -> 94716556155)
   currency: "LKR",
   deliveryFee: 450,            // flat delivery fee
   freeDeliveryOver: 10000,     // free delivery above this subtotal (set to 0 to disable)
