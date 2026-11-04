@@ -98,6 +98,45 @@
       <div class="tile-txt"><h3>${c.tag}</h3><p>${c.line}</p><span>3 colours →</span></div>
     </a>`;
   }).join("");
+  /* ---------- tiles shuffle through every photo of their theme ---------- */
+  // Rules at every moment: boy, girl, boy, girl across the four tiles; four different people;
+  // neighbouring tiles never wear the same tee colour.
+  const tileEls = [...document.querySelectorAll("#tiles .tile")];
+  const person = f => (f.match(/-([mw][ab])\.jpg$/) || [])[1];
+  const colourOf = f => f.split("/").pop().split("-")[1];
+  const tilePool = tag => PRODUCTS.filter(p => p.tag === tag).flatMap(p => Object.values(p.images).flat()).filter(f => !AVOID_COVER.includes(f));
+  const tileState = COLLECTIONS.map(c => c.model);
+  function pickTile(i) {
+    const cur = tileState[i];
+    const want = i % 2 === 0 ? "m" : "w";
+    const others = tileState.filter((_, j) => j !== i).map(person);
+    const adj = [tileState[i - 1], tileState[i + 1]].filter(Boolean).map(colourOf);
+    const pool = tilePool(COLLECTIONS[i].tag).filter(f => f !== cur && person(f)[0] === want);
+    const tiers = [
+      pool.filter(f => !others.includes(person(f)) && !adj.includes(colourOf(f))),
+      pool.filter(f => !others.includes(person(f))),
+      pool
+    ];
+    const c = tiers.find(t => t.length) || [cur];
+    return c[Math.floor(Math.random() * c.length)];
+  }
+  let tileN = 0;
+  const clashing = () => tileEls.map((_, i) => i).filter(i => (i > 0 && colourOf(tileState[i]) === colourOf(tileState[i - 1])) || (i < tileEls.length - 1 && colourOf(tileState[i]) === colourOf(tileState[i + 1])));
+  function swapTile() {
+    // fix a neighbouring colour clash first, otherwise go round the tiles in turn
+    const fix = clashing(), i = fix.length ? fix[Math.floor(Math.random() * fix.length)] : tileN++ % tileEls.length;
+    const f = pickTile(i);
+    if (f === tileState[i]) return;
+    const im = tileEls[i].querySelector("img"), pre = new Image();
+    tileState[i] = f;
+    pre.onload = () => {
+      im.style.opacity = 0;
+      setTimeout(() => { im.src = f; im.style.opacity = 1; }, 450);
+    };
+    pre.src = f;
+  }
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) setInterval(swapTile, 3000);
+
   $("#tiles").addEventListener("click", e => {
     const t = e.target.closest(".tile"); if (!t) return;
     tagFilter = t.dataset.tag; renderChips(); renderGrid();

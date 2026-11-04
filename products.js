@@ -40,19 +40,19 @@ const COLOURS = {
 };
 
 // The four collections, shown as big tiles and as shop rows.
-// Tiles use Man A + Woman B only; the hero uses Man B + Woman A only, so nobody appears in both.
+// Tiles open as: Signature (green), Golden Buds (white), Blossom (black), Tea Time (green), boy-girl-boy-girl; then they shuffle through every photo of their theme.
 const COLLECTIONS = [
   { tag: "Signature",   line: "Our mark, in minimal tea line art.",  model: "images/sprout-green-ma.jpg",  image: "images/sprout-green-ma.jpg" },
-  { tag: "Golden Buds", line: "Hand-painted gold tea buds.",         model: "images/bud2-white-wb.jpg",    image: "images/bud2-white-wb.jpg" },
-  { tag: "Blossom",     line: "The tea flower, in full colour.",     model: "images/blossom-green-ma.jpg", image: "images/blossom-green-ma.jpg" },
-  { tag: "Tea Time",    line: "The tea ritual, with a smile.",       model: "images/teatime-green-wb.jpg", image: "images/teatime-green-wb.jpg" }
+  { tag: "Golden Buds", line: "Small buds, golden moments.",         model: "images/bud2-white-wb.jpg",    image: "images/bud2-white-wb.jpg" },
+  { tag: "Blossom",     line: "The tea flower, in full colour.",     model: "images/blossom-black-mb.jpg", image: "images/blossom-black-mb.jpg" },
+  { tag: "Tea Time",    line: "The tea ritual, with a smile.",       model: "images/teatime-green-wa.jpg", image: "images/teatime-green-wa.jpg" }
 ];
 
 const HERO = [
   { tag: "Signature",   name: "The Sprout",   img: "images/sprout-green-mb.jpg" },
   { tag: "Blossom",     name: "Tea Blossom",  img: "images/blossom-white-wa.jpg" },
   { tag: "Golden Buds", name: "Golden Sprig", img: "images/bud3-white-mb.jpg" },
-  { tag: "Tea Time",    name: "The Pour",     img: "images/teatime-white-wa.jpg" }
+  { tag: "Tea Time",    name: "Tea Time",     img: "images/teatime-white-wa.jpg" }
 ];
 
 // Photos with a busy background (to be re-shot): never used as a card cover while another photo exists.
@@ -71,7 +71,7 @@ const PRODUCTS = [
     desc: "A simple three-leaf tea bud in flat gold. Printed A4-size on the chest.", price: 3990,
     images: { white: ["images/bud1-white-wa.jpg"], black: ["images/bud1-black-ma.jpg", "images/bud1-black-mb.jpg"], green: ["images/bud1-green-wb.jpg"] } },
   { id: "bud2", tag: "Golden Buds", name: "Golden Burst", line: "Gold watercolour leaves in bloom.",
-    desc: "A burst of tea leaves in gold watercolour. Printed A4-size on the chest. Our premium piece.", price: 3990,
+    desc: "A burst of tea leaves in gold watercolour. Printed A4-size on the chest.", price: 3990,
     images: { white: ["images/bud2-white-ma.jpg", "images/bud2-white-wb.jpg"], black: ["images/bud2-black-wa.jpg"], green: ["images/bud2-green-mb.jpg"] } },
   { id: "bud3", tag: "Golden Buds", name: "Golden Sprig", line: "Five tall gold leaves, one sprig.",
     desc: "A tall sprig of five tea leaves in gold. Printed A4-size on the chest.", price: 3990,
@@ -79,7 +79,7 @@ const PRODUCTS = [
   { id: "tea-blossom", tag: "Blossom", name: "Tea Blossom", line: "The tea flower, in full colour.",
     desc: "A flowering tea branch, true to life, in full colour. Printed A4-size on the chest.", price: 3490,
     images: { white: ["images/blossom-white-ma.jpg", "images/blossom-white-wb.jpg", "images/blossom-white-mb.jpg", "images/blossom-white-wa.jpg"], black: ["images/blossom-black-ma.jpg", "images/blossom-black-wb.jpg", "images/blossom-black-mb.jpg", "images/blossom-black-wa.jpg"], green: ["images/blossom-green-ma.jpg", "images/blossom-green-wb.jpg", "images/blossom-green-mb.jpg", "images/blossom-green-wa.jpg"] } },
-  { id: "the-pour", tag: "Tea Time", name: "The Pour", line: "Tea, poured with a smile.",
+  { id: "the-pour", tag: "Tea Time", name: "Tea Time", line: "Tea, poured with a smile.",
     desc: "A watercolour teapot pouring into a splashing cup. No words, just the ritual. Printed A4-size on the chest.", price: 3290,
     images: { white: ["images/teatime-white-ma.jpg", "images/teatime-white-wb.jpg", "images/teatime-white-mb.jpg", "images/teatime-white-wa.jpg"], black: ["images/teatime-black-ma.jpg", "images/teatime-black-wb.jpg", "images/teatime-black-mb.jpg", "images/teatime-black-wa.jpg"], green: ["images/teatime-green-ma.jpg", "images/teatime-green-wb.jpg", "images/teatime-green-mb.jpg", "images/teatime-green-wa.jpg"] } }
 ];
