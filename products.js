@@ -1,124 +1,154 @@
 // ============================================================
 //  TEA ISLAND – store settings & products
-//  Edit this file to change prices, add products, or swap photos.
+//  Edit this file to change prices, add products or swap photos.
 // ============================================================
 
 const STORE = {
   name: "Tea Island",
-  whatsapp: "94716556155",     // international format, no + or spaces (0716556155 -> 94716556155)
+  tagline: "Pure Ceylon. Elevated.",
+  whatsapp: "94716556155",          // 071 655 6155 in international format, no + or spaces
+  whatsappDisplay: "071 655 6155",
   currency: "LKR",
-  deliveryFee: 450,            // flat delivery fee
-  freeDeliveryOver: 10000,     // free delivery above this subtotal (set to 0 to disable)
-  sizes: ["S", "M", "L", "XL"],
+  deliveryFee: 450,                 // flat island-wide delivery fee
+  freeDeliveryOver: 10000,          // free delivery above this subtotal (0 = never free)
+  sizes: ["S", "M", "L", "XL", "XXL"],
   tiktok: "https://www.tiktok.com/@teaislandfy",
+  instagram: "",                    // add the Instagram link here when the account is ready
+  facebook: "",                     // add the Facebook Page link here
 
-  // Thin bar at the very top of the page
   announcement: "Pre-order on WhatsApp  ·  Island-wide delivery  ·  Free delivery over LKR 10,000",
 
-  // Small trust points under the hero (edit freely, keep 3-4)
-  trust: [
-    ["Pre-order on WhatsApp", "Send your order in one tap"],
-    ["Island-wide delivery", "Straight to your door"],
-    ["Cash on delivery", "Pay when it arrives"]
+  sizeGuideHead: ["Size", "Chest (in)", "Length (in)"],
+  sizeGuide: [
+    ["S", "19¾", "27"],
+    ["M", "20¾", "28"],
+    ["L", "21¾", "29"],
+    ["XL", "22¾", "30"],
+    ["XXL", "23¾", "31"]
   ],
-
-  // Products shown in the hero picture (use product ids)
-  heroIds: ["sand-leaf-grid", "signature-t", "forest-sprout"],
-
-  // Options listed in the Filter panel. Options with no products show greyed out as (0).
-  // Add or rename freely; a product's size/fabric/weight/type must match one of these.
-  filterSizes: ["XS", "S", "M", "L", "XL", "XXL"],
-  fabricTypes: ["100% Cotton", "Linen", "Rayon Blended", "Cotton Spandex", "Corduroy"],
-  fabricWeights: ["Cotton Spandex", "Heavy Cotton", "Light Weight", "Premium Heavy Weight", "Premium Medium Weight", "Premium Mid weight"],
-  productTypes: ["T-shirts", "Oversized Tees", "Crop Tops", "Tank Tops"],
-
-  // Size guide popup. Leave empty to hide the link.
-  // Example row: ["S", "18 in", "26 in"]
-  sizeGuideHead: ["Size", "Chest (flat)", "Length"],
-  sizeGuide: []
+  sizeNote: "Unisex fit. Women usually take one size smaller."
 };
 
-// Customer reviews. Leave empty until you have real ones; the section hides itself.
-// Example: { name: "Nimali", text: "Super soft and the print looks great." }
-const REVIEWS = [];
+// The four tee colours
+const COLOURS = {
+  white: { name: "White",        hex: "#F4F2EC" },
+  green: { name: "Forest Green", hex: "#14472F" },
+  black: { name: "Black",        hex: "#1C1C1C" },
+  beige: { name: "Beige",        hex: "#E3D3AE" }
+};
 
-// Collections shown as big tiles. "tag" must match a product's tag below.
-// heroId picks which product's photo fills the tile.
+// The three collections, shown as big tiles and as shop filters
+// "model" = lifestyle photo of one person wearing one tee (drop the file in /images).
+// "image" = flat mockup, used automatically until the model photo exists.
 const COLLECTIONS = [
-  { tag: "Botanical", title: "Botanical", line: "Leaves and sprouts from the island", heroId: "forest-sprout" },
-  { tag: "Signature", title: "Signature", line: "The gold T, in deep green", heroId: "signature-t" },
-  { tag: "Tea Time",  title: "Tea Time",  line: "For the first-cup-of-the-day people", heroId: "teapot-white" }
+  { tag: "Signature", line: "Our mark, in minimal tea line art.",    model: "images/model-signature.jpg", image: "images/signature-sprout-green.jpg" },
+  { tag: "Botanical", line: "The tea plant in real colour and gold.", model: "images/model-botanical.jpg", image: "images/botanical-tea-blossom-white.jpg" },
+  { tag: "Tea Time",  line: "The tea ritual, with a smile.",          model: "images/model-teatime.jpg",   image: "images/teatime-plain-tea-two-sugars-green.jpg" }
 ];
 
-// To use a real photo, put the file in /images and set  image: "images/my-photo.jpg"
-// Without a photo, a drawn t-shirt preview is shown using color / ink / motif.
-// motif options: leaves, sprout, cup, branch, circle, logo
-// badge (optional): text shown on the corner of the card, e.g. "New"
-// Optional per product (filters appear automatically once you fill them in):
-//   sizes: ["M","L"]            sizes this tee is offered in (default: all STORE.sizes)
-//   soldOut: true               shows "Sold out" and disables ordering
-//   type: "T-shirts"            product type (see STORE.productTypes)
-//   fabric: "100% Cotton"       fabric type (see STORE.fabricTypes)
-//   weight: "Light Weight"      fabric weight (see STORE.fabricWeights)
+// Hero: one tee per theme, White and Green only, shuffled automatically
+const HERO = ["Signature", "Botanical", "Tea Time"];
+
+// Products. "images" lists one photo per colour the tee comes in.
+// badge (optional): small label on the card, e.g. "New" or "Limited"
+// soldOut: true  shows "Sold out" and stops ordering
 const PRODUCTS = [
   {
-    id: "sand-leaf-grid", tag: "Botanical", badge: "New",
-    name: "Leaf Collection Tee",
-    type: "T-shirts",
-    fabric: "100% Cotton",
-    price: 3490,
-    color: "#d8c79a", ink: "#2f6b3a", motif: "leaves",
-    desc: "Tea-leaf studies in a neat grid. Soft sand cotton.",
-    image: "images/leaf-collection.jpg"
-  },
-  {
-    id: "forest-sprout", tag: "Botanical",
-    name: "Forest Sprout Tee",
-    type: "T-shirts",
-    fabric: "100% Cotton",
+    id: "sprout", tag: "Signature", badge: "Our mark",
+    name: "The Sprout",
+    line: "Two leaves, one stem. Our mark.",
+    desc: "The Tea Island Sprout, drawn in a single minimal line. Printed A4-size on the chest. Black comes printed in gold.",
     price: 3290,
-    color: "#2f6b3a", ink: "#f3f1e8", motif: "sprout",
-    desc: "A single tea sprout, minimal and fresh. Forest green.",
-    image: "images/forest-sprout.jpg"
+    images: {
+      white: "images/signature-sprout-white.jpg",
+      green: "images/signature-sprout-green.jpg",
+      black: "images/signature-sprout-black.jpg",
+      beige: "images/signature-sprout-beige.jpg"
+    }
   },
   {
-    id: "teapot-white", tag: "Tea Time",
-    name: "Slow Pour Tee",
-    type: "T-shirts",
-    fabric: "100% Cotton",
-    price: 3290,
-    color: "#f4f2ec", ink: "#2b2b2b", motif: "cup",
-    desc: "For those who live for the first cup of the day. White.",
-    image: "images/slow-pour.jpg"
-  },
-  {
-    id: "olive-branch", tag: "Botanical",
-    name: "Olive Leaf Tee",
-    type: "T-shirts",
-    fabric: "100% Cotton",
+    id: "leaf-collection", tag: "Botanical", badge: "New",
+    name: "Leaf Collection",
+    line: "Tea-leaf studies, set in a grid.",
+    desc: "A collector's sheet of real tea leaves, each one drawn from life. Printed A4-size on the chest.",
     price: 3490,
-    color: "#5a6b3c", ink: "#f3f1e8", motif: "branch",
-    desc: "Fine-line tea branch on olive. Relaxed fit.",
-    image: null
+    images: {
+      white: "images/botanical-leaf-collection-white.jpg",
+      green: "images/botanical-leaf-collection-green.jpg",
+      black: "images/botanical-leaf-collection-black.jpg",
+      beige: "images/botanical-leaf-collection-beige.jpg"
+    }
   },
   {
-    id: "teal-circle", tag: "Botanical",
-    name: "Moon Leaf Tee",
-    type: "T-shirts",
-    fabric: "100% Cotton",
+    id: "tea-blossom", tag: "Botanical", badge: "New",
+    name: "Tea Blossom",
+    line: "The tea flower, in full colour.",
+    desc: "A flowering tea branch, true to life, in full colour. Printed A4-size on the chest.",
     price: 3490,
-    color: "#2a8a85", ink: "#f3f1e8", motif: "circle",
-    desc: "A tea leaf inside a circle. Calm teal.",
-    image: null
+    images: {
+      white: "images/botanical-tea-blossom-white.jpg",
+      green: "images/botanical-tea-blossom-green.jpg",
+      black: "images/botanical-tea-blossom-black.jpg",
+      beige: "images/botanical-tea-blossom-beige.jpg"
+    }
   },
   {
-    id: "signature-t", tag: "Signature", badge: "Signature",
-    name: "Signature Gold T Tee",
-    type: "T-shirts",
-    fabric: "100% Cotton",
+    id: "tea-burst", tag: "Botanical", badge: "Limited",
+    name: "Tea Burst",
+    line: "Hand-painted gold, on Forest Green.",
+    desc: "A burst of gold watercolour tea leaves on deep Forest Green. Our premium piece.",
     price: 3990,
-    color: "#0b2a1c", ink: "#d9b75b", motif: "logo",
-    desc: "Our gold monogram on deep green. The Tea Island signature.",
-    image: "images/signature-t.jpg"
+    images: { green: "images/botanical-gold-bloom-green.jpg" }
+  },
+  {
+    id: "gold-bud", tag: "Botanical", badge: "Limited",
+    name: "Golden Bud",
+    line: "The first bud of the flush, in gold.",
+    desc: "The tender bud every plucker looks for, painted in gold watercolour on black.",
+    price: 3990,
+    images: { black: "images/botanical-gold-bud-black.jpg" }
+  },
+  {
+    id: "gold-sprig", tag: "Botanical",
+    name: "Golden Sprig",
+    line: "A gold tea sprig, soft and light.",
+    desc: "A gold watercolour tea sprig. White and Beige carry two different sprigs from the same series.",
+    price: 3790,
+    images: {
+      white: "images/botanical-gold-sprig-a-white.jpg",
+      beige: "images/botanical-gold-sprig-b-beige.jpg"
+    }
+  },
+  {
+    id: "plain-tea", tag: "Tea Time", badge: "Fan favourite",
+    name: "Plain Tea, Two Sugars",
+    line: "No negotiations.",
+    desc: "For everyone who orders exactly this, every single time.",
+    price: 3290,
+    images: { green: "images/teatime-plain-tea-two-sugars-green.jpg" }
+  },
+  {
+    id: "say-when", tag: "Tea Time",
+    name: "Say When",
+    line: "The slow pour of the first cup.",
+    desc: "A hand-drawn teapot mid-pour, for the first-cup-of-the-day people.",
+    price: 3290,
+    images: { beige: "images/teatime-say-when-beige.jpg" }
+  },
+  {
+    id: "tea-person", tag: "Tea Time",
+    name: "Definitely a Tea Person",
+    line: "Coffee? Never heard of it.",
+    desc: "A hand-drawn cup and a line that settles the argument.",
+    price: 3290,
+    images: { black: "images/teatime-i-m-definitely-a-tea-person-black.jpg" }
+  },
+  {
+    id: "the", tag: "Tea Time",
+    name: "තේ",
+    line: "Tea, in Sinhala.",
+    desc: "තේ: the one word every Sri Lankan knows by heart.",
+    price: 3290,
+    images: { white: "images/teatime-tea-white.jpg" }
   }
 ];
