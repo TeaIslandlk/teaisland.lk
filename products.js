@@ -39,19 +39,18 @@ const COLOURS = {
 
 // The three collections, shown as big tiles and as shop filters
 // "model" = lifestyle photo of one person wearing one tee (drop the file in /images).
-// "hero" = optional different photo for the hero (White/Green tees only)
 // "image" = flat mockup, used automatically until the model photo exists.
 const COLLECTIONS = [
-  { tag: "Signature", line: "Our mark, in minimal tea line art.",    model: "images/model-signature.jpg", image: "images/signature-sprout-green.jpg" },
-  { tag: "Botanical", line: "The tea plant in real colour and gold.", model: "images/model-botanical-2.jpg", hero: "images/model-botanical.jpg", heroProduct: "tea-blossom", image: "images/botanical-leaf-collection-black.jpg" },
-  { tag: "Tea Time",  line: "The tea ritual, with a smile.",          model: "images/model-teatime.jpg",   image: "images/teatime-plain-tea-two-sugars-green.jpg" }
+  { tag: "Botanical", line: "The tea plant in real colour and gold.", model: "images/model-botanical.jpg",   image: "images/botanical-tea-blossom-white.jpg" },
+  { tag: "Signature", line: "Our mark, in minimal tea line art.",    model: "images/model-botanical-2.jpg", image: "images/botanical-leaf-collection-black.jpg" },
+  { tag: "Tea Time",  line: "The tea ritual, with a smile.",          model: "images/model-teatime.jpg",     image: "images/teatime-plain-tea-two-sugars-green.jpg" }
 ];
 
 // Hero: all four models; three show at once and the set shuffles automatically
 const HERO = [
   { tag: "Signature", name: "The Sprout",      img: "images/model-signature.jpg" },
   { tag: "Tea Time",  name: "Say When",        img: "images/model-teatime.jpg" },
-  { tag: "Botanical", name: "Leaf Collection", img: "images/model-botanical-2.jpg" },
+  { tag: "Signature", name: "Leaf Collection", img: "images/model-botanical-2.jpg" },
   { tag: "Botanical", name: "Tea Blossom",     img: "images/model-botanical.jpg" }
 ];
 
@@ -73,7 +72,7 @@ const PRODUCTS = [
     }
   },
   {
-    id: "leaf-collection", tag: "Botanical", badge: "New",
+    id: "leaf-collection", tag: "Signature", badge: "New",
     name: "Leaf Collection",
     line: "Tea-leaf studies, set in a grid.",
     desc: "A collector's sheet of real tea leaves, each one drawn from life. Printed A4-size on the chest.",
