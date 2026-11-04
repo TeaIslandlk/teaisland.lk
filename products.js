@@ -16,7 +16,10 @@ const STORE = {
   instagram: "",                    // add the Instagram link here when the account is ready
   facebook: "",                     // add the Facebook Page link here
 
-  announcement: "Pre-order on WhatsApp  ·  Island-wide delivery  ·  Free delivery over LKR 10,000",
+  announcement: "Now taking pre-orders on WhatsApp  ·  Prepaid by bank transfer  ·  Island-wide delivery",
+
+  // Shown in the bag and added to the WhatsApp order message once filled in.
+  bank: { bankName: "", accountName: "", accountNumber: "", branch: "" },
 
   sizeGuideHead: ["Size", "Chest (in)", "Length (in)"],
   sizeGuide: [

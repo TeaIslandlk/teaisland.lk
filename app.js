@@ -24,21 +24,64 @@
     STORE.facebook && `<a href="${STORE.facebook}" target="_blank" rel="noopener">Facebook</a>`
   ].filter(Boolean).join(" · ");
 
-  /* ---------- hero: 3 themes, White/Green only, auto shuffle ---------- */
+  /* ---------- hero: four people in a fixed boy-girl-boy-girl cycle, photos shuffle forever ---------- */
+  // Every card keeps one person (Man A, Woman A, Man B, Woman B), so the visible cards are always four different people.
+  // Each time a card slips to the back it swaps to a fresh, shuffled photo of that same person.
+  const PEOPLE = ["ma", "wa", "mb", "wb"];
+  const pools = {};
+  PEOPLE.forEach(k => pools[k] = []);
+  PRODUCTS.forEach(p => Object.values(p.images).forEach(list => list.forEach(f => {
+    const k = (f.match(/-(m|w)([ab])\.jpg$/) || []).slice(1, 3).join("");
+    if (pools[k] && !AVOID_COVER.includes(f)) pools[k].push({ img: f, tag: p.tag, name: p.name });
+  })));
+  const shuffle = arr => { for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; } return arr; };
+  const queues = {};
+  const nextPhoto = k => {
+    if (!queues[k] || !queues[k].length) {
+      const last = queues[k + "_last"];
+      queues[k] = shuffle(pools[k].slice());
+      if (last && queues[k][queues[k].length - 1].img === last) queues[k].unshift(queues[k].pop());
+    }
+    const ph = queues[k].pop(); queues[k + "_last"] = ph.img; return ph;
+  };
   const stack = $("#heroStack");
-  stack.innerHTML = HERO.map((c, i) => `
-    <figure class="hcard" data-i="${i}">
-      ${img(c.img, "", c.name)}
-      <figcaption><span>${c.tag}</span><b>${esc(c.name)}</b></figcaption>
-    </figure>`).join("");
-  let front = 0;
-  const hc = [...stack.querySelectorAll(".hcard")];
-  function layout() {
-    hc.forEach((el, i) => { el.dataset.pos = Math.min((i - front + hc.length) % hc.length, 3); });
+  // The line of four cards is always a run of different people: the next person is never one of the two before it,
+  // and boys/girls alternate (a rare second girl or boy in a row is allowed for variety, never three).
+  const gOf = k => k[0];
+  function nextPerson(prev1, prev2) {                  // prev1 = last in line, prev2 = the one before
+    let c = PEOPLE.filter(k => k !== prev1 && k !== prev2);
+    const alt = c.filter(k => gOf(k) !== gOf(prev1));
+    if (alt.length && (Math.random() < 0.85 || gOf(prev1) === gOf(prev2))) c = alt;
+    return c[Math.floor(Math.random() * c.length)];
   }
+  const start4 = ["ma", "wa", "mb", "wb"];             // opens: Man A, Woman A, Man B, Woman B
+  const items = start4.map(k => ({ k, ph: nextPhoto(k) }));
+  stack.innerHTML = items.map((s, i) => `
+    <figure class="hcard" data-i="${i}">
+      <img src="${s.ph.img}" alt="${esc(s.ph.name)}">
+      <figcaption><span>${s.ph.tag}</span><b>${esc(s.ph.name)}</b></figcaption>
+    </figure>`).join("");
+  const hc = [...stack.querySelectorAll(".hcard")];
+  let line = [0, 1, 2, 3];                              // card indices, front first
+  function layout() { line.forEach((ci, j) => { hc[ci].dataset.pos = Math.min(j, 3); }); }
   layout();
+  function paint(ci) {                                  // swap a hidden card to its new photo
+    const it = items[ci], el = hc[ci], im = el.querySelector("img");
+    const pre = new Image(); pre.onload = () => {
+      im.src = it.ph.img; im.alt = it.ph.name;
+      el.querySelector("span").textContent = it.ph.tag; el.querySelector("b").textContent = it.ph.name;
+    };
+    pre.src = it.ph.img;
+  }
   let timer;
-  const rotate = () => { front = (front + 1) % hc.length; layout(); };
+  const rotate = () => {
+    const leaving = line.shift(); line.push(leaving);
+    const p1 = items[line[2]].k, p2 = items[line[1]].k;
+    const k = nextPerson(p1, p2);
+    items[leaving] = { k, ph: nextPhoto(k) };
+    layout();
+    setTimeout(() => paint(leaving), 1000);
+  };
   const start = () => { stop(); if (!matchMedia("(prefers-reduced-motion: reduce)").matches) timer = setInterval(rotate, 3600); };
   const stop = () => clearInterval(timer);
   stack.addEventListener("mouseenter", stop);
@@ -199,8 +242,13 @@
     if (!name || !addr) { alert("Please add your name and delivery address."); return; }
     const t = totals();
     const lines = cart.map(i => { const p = prod(i.id); return `• ${p.name} (${COLOURS[i.col].name}, ${i.size}) x${i.q} = ${fmt(p.price * i.q)}`; });
-    const msg = `Hi Tea Island! I'd like to order:\n${lines.join("\n")}\n\nSubtotal: ${fmt(t.sub)}\nDelivery: ${t.ship ? fmt(t.ship) : "Free"}\nTotal: ${fmt(t.total)} (cash on delivery)\n\nName: ${name}\nAddress: ${addr}`;
+    const msg = `Hi Tea Island! I'd like to order:\n${lines.join("\n")}\n\nSubtotal: ${fmt(t.sub)}\nDelivery: ${t.ship ? fmt(t.ship) : "Free"}\nTotal: ${fmt(t.total)} (pre-order, prepaid by bank transfer)\n\nName: ${name}\nAddress: ${addr}\n\nPlease send me the bank details to complete my pre-order.`;
     window.open(waMsg(msg), "_blank", "noopener");
   };
+  const B = STORE.bank || {};
+  if (B.accountNumber) {
+    $("#bankBox").hidden = false;
+    $("#bankBox").innerHTML = `<b>Bank transfer details</b><br>${esc(B.bankName)}${B.branch ? " · " + esc(B.branch) : ""}<br>${esc(B.accountName)}<br>${esc(B.accountNumber)}<br><small>Send the payment slip on WhatsApp to confirm.</small>`;
+  }
   renderCart();
 })();
