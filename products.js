@@ -83,3 +83,15 @@ const PRODUCTS = [
     desc: "A watercolour teapot pouring into a splashing cup. No words, just the ritual. Printed A4-size on the chest.", price: 3290,
     images: { white: ["images/teatime-white-ma.jpg", "images/teatime-white-wb.jpg", "images/teatime-white-mb.jpg", "images/teatime-white-wa.jpg"], black: ["images/teatime-black-ma.jpg", "images/teatime-black-wb.jpg", "images/teatime-black-mb.jpg", "images/teatime-black-wa.jpg"], green: ["images/teatime-green-ma.jpg", "images/teatime-green-wb.jpg", "images/teatime-green-mb.jpg", "images/teatime-green-wa.jpg"] } }
 ];
+
+// Shop order: one line per design, colours left to right (White, Black, Forest Green).
+// "start" = who is on the left of that line ("m" boy, "w" girl); the line then alternates boy / girl.
+const SHOP_ORDER = [
+  { id: "sprout",      start: "m" },   // 1
+  { id: "bud1",        start: "w" },   // 2  Golden Bud
+  { id: "bud2",        start: "m" },   // 2  Golden Burst
+  { id: "leaf",        start: "m" },   // 3
+  { id: "the-pour",    start: "w" },   // 4  Tea Time
+  { id: "tea-blossom", start: "m" },   // 5
+  { id: "bud3",        start: "m" }    // 6  Golden Sprig (only Man B white and Woman B black exist, so M-W-M is the closest)
+];

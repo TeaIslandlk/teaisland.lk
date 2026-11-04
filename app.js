@@ -153,29 +153,30 @@
   $("#tagChips").addEventListener("click", e => { const b = e.target.closest("[data-tag]"); if (b) { tagFilter = b.dataset.tag; renderChips(); renderGrid(); } });
   $("#colourChips").addEventListener("click", e => { const b = e.target.closest("[data-col]"); if (b) { colourFilter = b.dataset.col; renderChips(); renderGrid(); } });
 
-  // Cover photo for a card: boys and girls alternate across the grid (checkerboard), varying the model when possible.
+  // Cover photo for a card: the boy or girl the line asks for (never a busy-background photo when another exists).
   const gender = f => (f.match(/-(m|w)[ab]\.jpg$/) || [])[1];
-  function cover(list, n, startBoy) {
-    const want = ((n + (startBoy ? 0 : 1)) % 2 === 0) ? "m" : "w";
+  function cover(list, want, n) {
     const ok = list.filter(f => !AVOID_COVER.includes(f));
-    const base = ok.length ? ok : list;
-    const pool = base.filter(f => gender(f) === want);
-    return (pool.length ? pool[Math.floor(n / 2) % pool.length] : base[0]);
+    const pick = pool => pool[n % pool.length];
+    let pool = ok.filter(f => gender(f) === want);
+    if (!pool.length) pool = list.filter(f => gender(f) === want);
+    if (pool.length) return pick(pool);
+    return (ok.length ? ok : list)[0];
   }
   function renderGrid() {
-    const rows = COLLECTIONS.filter(c => tagFilter === "All" || c.tag === tagFilter).map((c, ci) => {
-      let n = 0;
-      const cards = PRODUCTS.filter(p => p.tag === c.tag).flatMap(p =>
-        colourKeys(p).filter(k => colourFilter === "All" || k === colourFilter).map(k => {
-          const src = cover(p.images[k], n++, COLLECTIONS.indexOf(c) % 2 === 0);
-          return `<article class="card" data-id="${p.id}" data-col="${k}" data-img="${src}" tabindex="0">
+    const cards = SHOP_ORDER.flatMap((line, li) => {
+      const p = PRODUCTS.find(x => x.id === line.id);
+      if (!p || (tagFilter !== "All" && p.tag !== tagFilter)) return [];
+      return colourKeys(p).filter(k => colourFilter === "All" || k === colourFilter).map((k, j) => {
+        const other = line.start === "m" ? "w" : "m";
+        const src = cover(p.images[k], j % 2 === 0 ? line.start : other, li + j);
+        return `<article class="card" data-id="${p.id}" data-col="${k}" data-img="${src}" tabindex="0">
         <div class="card-img">${img(src, "", p.name + " in " + COLOURS[k].name)}${p.soldOut ? `<span class="badge out">Sold out</span>` : ""}</div>
-        <div class="card-info"><small>${COLOURS[k].name}</small><h3>${esc(p.name)}</h3>
+        <div class="card-info"><small>${p.tag} · ${COLOURS[k].name}</small><h3>${esc(p.name)}</h3>
           <div class="card-foot"><b>${fmt(p.price)}</b><span class="mini"><i style="--c:${COLOURS[k].hex}"></i></span></div></div>
-      </article>`; })).join("");
-      return cards ? `<div class="theme-row"><div class="theme-head"><h3>${c.tag}</h3><p>${c.line}</p></div><div class="theme-cards">${cards}</div></div>` : "";
+      </article>`; });
     }).join("");
-    $("#grid").innerHTML = rows || `<p class="empty">No tees match that combination yet.</p>`;
+    $("#grid").innerHTML = cards ? `<div class="theme-cards">${cards}</div>` : `<p class="empty">No tees match that combination yet.</p>`;
   }
   $("#grid").addEventListener("click", e => { const c = e.target.closest(".card"); if (c) openProduct(c.dataset.id, c.dataset.col, c.dataset.img); });
   $("#grid").addEventListener("keydown", e => { if (e.key === "Enter") { const c = e.target.closest(".card"); if (c) openProduct(c.dataset.id, c.dataset.col, c.dataset.img); } });
