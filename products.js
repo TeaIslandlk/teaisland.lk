@@ -56,7 +56,7 @@ const HERO = [
 ];
 
 // Photos with a busy background (to be re-shot): never used as a card cover while another photo exists.
-const AVOID_COVER = ["images/bud1-black-ma.jpg", "images/bud2-black-wa.jpg", "images/bud1-green-wb.jpg"];
+const AVOID_COVER = ["images/bud1-black-ma.jpg", "images/bud2-black-wa.jpg", "images/bud1-green-wb.jpg", "images/teatime-black-mb.jpg"];
 
 // Products: 7 designs, each in White, Black and Forest Green.
 // images[colour] = every model photo of that tee (the first is a fallback; the shop picks the cover so boys and girls alternate).
