@@ -71,20 +71,32 @@
   $("#tagChips").addEventListener("click", e => { const b = e.target.closest("[data-tag]"); if (b) { tagFilter = b.dataset.tag; renderChips(); renderGrid(); } });
   $("#colourChips").addEventListener("click", e => { const b = e.target.closest("[data-col]"); if (b) { colourFilter = b.dataset.col; renderChips(); renderGrid(); } });
 
+  // Cover photo for a card: boys and girls alternate across the grid (checkerboard), varying the model when possible.
+  const gender = f => (f.match(/-(m|w)[ab]\.jpg$/) || [])[1];
+  function cover(list, n, startBoy) {
+    const want = ((n + (startBoy ? 0 : 1)) % 2 === 0) ? "m" : "w";
+    const ok = list.filter(f => !AVOID_COVER.includes(f));
+    const base = ok.length ? ok : list;
+    const pool = base.filter(f => gender(f) === want);
+    return (pool.length ? pool[Math.floor(n / 2) % pool.length] : base[0]);
+  }
   function renderGrid() {
-    const rows = COLLECTIONS.filter(c => tagFilter === "All" || c.tag === tagFilter).map(c => {
+    const rows = COLLECTIONS.filter(c => tagFilter === "All" || c.tag === tagFilter).map((c, ci) => {
+      let n = 0;
       const cards = PRODUCTS.filter(p => p.tag === c.tag).flatMap(p =>
-        colourKeys(p).filter(k => colourFilter === "All" || k === colourFilter).map(k => `<article class="card" data-id="${p.id}" data-col="${k}" tabindex="0">
-        <div class="card-img">${img(p.images[k], "", p.name + " in " + COLOURS[k].name)}${p.soldOut ? `<span class="badge out">Sold out</span>` : ""}</div>
+        colourKeys(p).filter(k => colourFilter === "All" || k === colourFilter).map(k => {
+          const src = cover(p.images[k], n++, COLLECTIONS.indexOf(c) % 2 === 0);
+          return `<article class="card" data-id="${p.id}" data-col="${k}" data-img="${src}" tabindex="0">
+        <div class="card-img">${img(src, "", p.name + " in " + COLOURS[k].name)}${p.soldOut ? `<span class="badge out">Sold out</span>` : ""}</div>
         <div class="card-info"><small>${COLOURS[k].name}</small><h3>${esc(p.name)}</h3>
           <div class="card-foot"><b>${fmt(p.price)}</b><span class="mini"><i style="--c:${COLOURS[k].hex}"></i></span></div></div>
-      </article>`)).join("");
+      </article>`; })).join("");
       return cards ? `<div class="theme-row"><div class="theme-head"><h3>${c.tag}</h3><p>${c.line}</p></div><div class="theme-cards">${cards}</div></div>` : "";
     }).join("");
     $("#grid").innerHTML = rows || `<p class="empty">No tees match that combination yet.</p>`;
   }
-  $("#grid").addEventListener("click", e => { const c = e.target.closest(".card"); if (c) openProduct(c.dataset.id, c.dataset.col); });
-  $("#grid").addEventListener("keydown", e => { if (e.key === "Enter") { const c = e.target.closest(".card"); if (c) openProduct(c.dataset.id, c.dataset.col); } });
+  $("#grid").addEventListener("click", e => { const c = e.target.closest(".card"); if (c) openProduct(c.dataset.id, c.dataset.col, c.dataset.img); });
+  $("#grid").addEventListener("keydown", e => { if (e.key === "Enter") { const c = e.target.closest(".card"); if (c) openProduct(c.dataset.id, c.dataset.col, c.dataset.img); } });
   renderChips(); renderGrid();
 
   /* ---------- overlays ---------- */
@@ -97,10 +109,12 @@
 
   /* ---------- product dialog ---------- */
   let cur = null, curCol = null, curSize = null, qty = 1;
-  function openProduct(id, col) {
+  let curImg = null;
+  function openProduct(id, col, imgSrc) {
     cur = PRODUCTS.find(p => p.id === id);
     curCol = col && cur.images[col] ? col : colourKeys(cur)[0];
     curSize = null; qty = 1;
+    curImg = imgSrc && cur.images[curCol].includes(imgSrc) ? imgSrc : cur.images[curCol][0];
     $("#pTag").textContent = cur.tag;
     $("#pName").textContent = cur.name;
     $("#pLine").textContent = cur.line;
@@ -114,13 +128,17 @@
     open($("#pOverlay"));
   }
   function paintProduct() {
-    $("#pImg").src = cur.images[curCol]; $("#pImg").alt = cur.name + " in " + COLOURS[curCol].name;
+    if (!cur.images[curCol].includes(curImg)) curImg = cur.images[curCol][0];
+    $("#pImg").src = curImg; $("#pImg").alt = cur.name + " in " + COLOURS[curCol].name;
     $("#pColourName").textContent = COLOURS[curCol].name;
     $("#pSwatches").innerHTML = colourKeys(cur).map(k =>
       `<button type="button" class="dot ${k === curCol ? "on" : ""}" data-c="${k}" title="${COLOURS[k].name}" aria-label="${COLOURS[k].name}" style="--c:${COLOURS[k].hex}"></button>`).join("");
+    const list = cur.images[curCol];
+    $("#pThumbs").innerHTML = list.length > 1 ? list.map(f => `<button type="button" class="thumb ${f === curImg ? "on" : ""}" data-f="${f}" aria-label="Photo"><img src="${f}" alt="" loading="lazy"></button>`).join("") : "";
     document.querySelectorAll("#pSizes .size").forEach(b => b.classList.toggle("on", b.dataset.s === curSize));
   }
-  $("#pSwatches").addEventListener("click", e => { const b = e.target.closest("[data-c]"); if (b) { curCol = b.dataset.c; paintProduct(); } });
+  $("#pSwatches").addEventListener("click", e => { const b = e.target.closest("[data-c]"); if (b) { curCol = b.dataset.c; curImg = cur.images[curCol][0]; paintProduct(); } });
+  $("#pThumbs").addEventListener("click", e => { const b = e.target.closest("[data-f]"); if (b) { curImg = b.dataset.f; paintProduct(); } });
   $("#pSizes").addEventListener("click", e => { const b = e.target.closest("[data-s]"); if (b) { curSize = b.dataset.s; $("#pHint").textContent = ""; paintProduct(); } });
   $("#qMinus").onclick = () => { qty = Math.max(1, qty - 1); $("#pQty").textContent = qty; };
   $("#qPlus").onclick = () => { qty = Math.min(20, qty + 1); $("#pQty").textContent = qty; };
@@ -159,7 +177,7 @@
     $("#checkout").hidden = false;
     $("#cartItems").innerHTML = cart.map((i, n) => {
       const p = prod(i.id);
-      return `<div class="line"><img src="${p.images[i.col]}" alt="">
+      return `<div class="line"><img src="${p.images[i.col][0]}" alt="">
         <div><b>${esc(p.name)}</b><small>${COLOURS[i.col].name} · ${i.size}</small>
           <div class="qty-row sm"><button data-n="${n}" data-d="-1">−</button><span>${i.q}</span><button data-n="${n}" data-d="1">+</button></div></div>
         <div class="line-r"><b>${fmt(p.price * i.q)}</b><button class="link" data-rm="${n}">Remove</button></div></div>`;

@@ -29,45 +29,54 @@ const STORE = {
   sizeNote: "Unisex fit. Women usually take one size smaller."
 };
 
-// The four tee colours
+// The three tee colours
 const COLOURS = {
   white: { name: "White",        hex: "#F4F2EC" },
-  green: { name: "Forest Green", hex: "#14472F" },
-  black: { name: "Black",        hex: "#1C1C1C" },
-  
+  green: { name: "Forest Green", hex: "#134931" },
+  black: { name: "Black",        hex: "#1C1C1C" }
 };
 
-// The three collections, shown as big tiles and as shop filters
-// "model" = lifestyle photo of one person wearing one tee (drop the file in /images).
-// "image" = flat mockup, used automatically until the model photo exists.
+// The four collections, shown as big tiles and as shop rows.
+// Tiles use Man A + Woman B only; the hero uses Man B + Woman A only, so nobody appears in both.
 const COLLECTIONS = [
-  { tag: "Signature",    line: "Our mark, in minimal tea line art.",      model: "images/shop-signature-green.jpg", image: "images/shop-signature-green.jpg" },
-  { tag: "Golden Buds",  line: "Hand-painted gold tea buds.",              model: "images/shop-buds-white.jpg",      image: "images/shop-buds-white.jpg" },
-  { tag: "Blossom",    line: "The tea flower, in full colour.",          model: "images/shop-botanical-green.jpg", image: "images/shop-botanical-green.jpg" },
-  { tag: "Tea Time",     line: "The tea ritual, with a smile.",            model: "images/shop-teatime-green.jpg",   image: "images/shop-teatime-green.jpg" }
+  { tag: "Signature",   line: "Our mark, in minimal tea line art.",  model: "images/sprout-green-ma.jpg",  image: "images/sprout-green-ma.jpg" },
+  { tag: "Golden Buds", line: "Hand-painted gold tea buds.",         model: "images/bud2-white-wb.jpg",    image: "images/bud2-white-wb.jpg" },
+  { tag: "Blossom",     line: "The tea flower, in full colour.",     model: "images/blossom-green-ma.jpg", image: "images/blossom-green-ma.jpg" },
+  { tag: "Tea Time",    line: "The tea ritual, with a smile.",       model: "images/teatime-green-wb.jpg", image: "images/teatime-green-wb.jpg" }
 ];
 
-// Hero: Man B + Woman A only. The collection tiles use Man A + Woman B, so nobody appears in both places.
 const HERO = [
-  { tag: "Signature",   name: "The Sprout",  img: "images/hero-sprout-manb.jpg" },
-  { tag: "Blossom",     name: "Tea Blossom", img: "images/shop-botanical-white.jpg" },
-  { tag: "Golden Buds", name: "Golden Bud",  img: "images/hero-bud-manb.jpg" },
-  { tag: "Tea Time",    name: "Say When",    img: "images/hero-saywhen-womana.jpg" }
+  { tag: "Signature",   name: "The Sprout",   img: "images/sprout-green-mb.jpg" },
+  { tag: "Blossom",     name: "Tea Blossom",  img: "images/blossom-white-wa.jpg" },
+  { tag: "Golden Buds", name: "Golden Sprig", img: "images/bud3-white-mb.jpg" },
+  { tag: "Tea Time",    name: "The Pour",     img: "images/teatime-white-wa.jpg" }
 ];
 
-// Products: one per theme, each in White, Black and Forest Green.
+// Photos with a busy background (to be re-shot): never used as a card cover while another photo exists.
+const AVOID_COVER = ["images/bud1-black-ma.jpg", "images/bud2-black-wa.jpg", "images/bud1-green-wb.jpg"];
+
+// Products: 7 designs, each in White, Black and Forest Green.
+// images[colour] = every model photo of that tee (the first is a fallback; the shop picks the cover so boys and girls alternate).
 const PRODUCTS = [
   { id: "sprout", tag: "Signature", name: "The Sprout", line: "Two leaves, one stem. Our mark.",
-    desc: "The Tea Island Sprout, drawn in a single minimal line. Printed A4-size on the chest. Black comes printed in gold.", price: 3290,
-    images: { white: "images/shop-signature-white.jpg", black: "images/shop-signature-black.jpg", green: "images/shop-signature-green.jpg" } },
+    desc: "The Tea Island Sprout, drawn in a single minimal line. Printed A4-size on the chest. Dark green on White, gold on Black, cream on Forest Green.", price: 3290,
+    images: { white: ["images/sprout-white-ma.jpg", "images/sprout-white-wb.jpg", "images/sprout-white-mb.jpg", "images/sprout-white-wa.jpg"], black: ["images/sprout-black-ma.jpg", "images/sprout-black-wb.jpg", "images/sprout-black-mb.jpg", "images/sprout-black-wa.jpg"], green: ["images/sprout-green-ma.jpg", "images/sprout-green-wb.jpg", "images/sprout-green-mb.jpg", "images/sprout-green-wa.jpg"] } },
+  { id: "leaf", tag: "Signature", name: "The Leaf", line: "Nine leaves, one quiet grid.",
+    desc: "Nine fine leaf outlines in a 3 x 3 grid. Printed A4-size on the chest. Dark green on White, gold on Black, pale gold on Forest Green.", price: 3290,
+    images: { white: ["images/leaf-white-ma.jpg", "images/leaf-white-wb.jpg", "images/leaf-white-mb.jpg", "images/leaf-white-wa.jpg"], black: ["images/leaf-black-ma.jpg", "images/leaf-black-wb.jpg", "images/leaf-black-mb.jpg", "images/leaf-black-wa.jpg"], green: ["images/leaf-green-ma.jpg", "images/leaf-green-wb.jpg", "images/leaf-green-mb.jpg", "images/leaf-green-wa.jpg"] } },
+  { id: "bud1", tag: "Golden Buds", name: "Golden Bud", line: "A single gold bud, drawn clean.",
+    desc: "A simple three-leaf tea bud in flat gold. Printed A4-size on the chest.", price: 3990,
+    images: { white: ["images/bud1-white-wa.jpg"], black: ["images/bud1-black-ma.jpg", "images/bud1-black-mb.jpg"], green: ["images/bud1-green-wb.jpg"] } },
+  { id: "bud2", tag: "Golden Buds", name: "Golden Burst", line: "Gold watercolour leaves in bloom.",
+    desc: "A burst of tea leaves in gold watercolour. Printed A4-size on the chest. Our premium piece.", price: 3990,
+    images: { white: ["images/bud2-white-ma.jpg", "images/bud2-white-wb.jpg"], black: ["images/bud2-black-wa.jpg"], green: ["images/bud2-green-mb.jpg"] } },
+  { id: "bud3", tag: "Golden Buds", name: "Golden Sprig", line: "Five tall gold leaves, one sprig.",
+    desc: "A tall sprig of five tea leaves in gold. Printed A4-size on the chest.", price: 3990,
+    images: { white: ["images/bud3-white-mb.jpg"], black: ["images/bud3-black-wb.jpg"], green: ["images/bud3-green-ma.jpg", "images/bud3-green-wa.jpg"] } },
   { id: "tea-blossom", tag: "Blossom", name: "Tea Blossom", line: "The tea flower, in full colour.",
     desc: "A flowering tea branch, true to life, in full colour. Printed A4-size on the chest.", price: 3490,
-    images: { white: "images/shop-botanical-white.jpg", black: "images/shop-botanical-black.jpg", green: "images/shop-botanical-green.jpg" } },
-  { id: "golden-bud", tag: "Golden Buds", name: "Golden Bud", line: "Hand-painted gold tea bud.",
-    desc: "A tea bud in gold watercolour. Printed A4-size on the chest. Our premium piece.", price: 3990,
-    images: { white: "images/shop-buds-white.jpg", black: "images/shop-buds-black.jpg", green: "images/shop-buds-green.jpg" } },
-  { id: "say-when", tag: "Tea Time", name: "Say When", line: "The tea ritual, with a smile.",
-    desc: "A teapot pouring into a cup, with a wink: say when. Printed A4-size on the chest.", price: 3290,
-    images: { white: "images/shop-teatime-white.jpg", black: "images/shop-teatime-black.jpg", green: "images/shop-teatime-green.jpg" } }
+    images: { white: ["images/blossom-white-ma.jpg", "images/blossom-white-wb.jpg", "images/blossom-white-mb.jpg", "images/blossom-white-wa.jpg"], black: ["images/blossom-black-ma.jpg", "images/blossom-black-wb.jpg", "images/blossom-black-mb.jpg", "images/blossom-black-wa.jpg"], green: ["images/blossom-green-ma.jpg", "images/blossom-green-wb.jpg", "images/blossom-green-mb.jpg", "images/blossom-green-wa.jpg"] } },
+  { id: "the-pour", tag: "Tea Time", name: "The Pour", line: "Tea, poured with a smile.",
+    desc: "A watercolour teapot pouring into a splashing cup. No words, just the ritual. Printed A4-size on the chest.", price: 3290,
+    images: { white: ["images/teatime-white-ma.jpg", "images/teatime-white-wb.jpg", "images/teatime-white-mb.jpg", "images/teatime-white-wa.jpg"], black: ["images/teatime-black-ma.jpg", "images/teatime-black-wb.jpg", "images/teatime-black-mb.jpg", "images/teatime-black-wa.jpg"], green: ["images/teatime-green-ma.jpg", "images/teatime-green-wb.jpg", "images/teatime-green-mb.jpg", "images/teatime-green-wa.jpg"] } }
 ];
-
