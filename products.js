@@ -39,10 +39,11 @@ const COLOURS = {
 
 // The three collections, shown as big tiles and as shop filters
 // "model" = lifestyle photo of one person wearing one tee (drop the file in /images).
+// "hero" = optional different photo for the hero (White/Green tees only)
 // "image" = flat mockup, used automatically until the model photo exists.
 const COLLECTIONS = [
   { tag: "Signature", line: "Our mark, in minimal tea line art.",    model: "images/model-signature.jpg", image: "images/signature-sprout-green.jpg" },
-  { tag: "Botanical", line: "The tea plant in real colour and gold.", model: "images/model-botanical.jpg", image: "images/botanical-tea-blossom-white.jpg" },
+  { tag: "Botanical", line: "The tea plant in real colour and gold.", model: "images/model-botanical-2.jpg", hero: "images/model-botanical.jpg", heroProduct: "tea-blossom", image: "images/botanical-leaf-collection-black.jpg" },
   { tag: "Tea Time",  line: "The tea ritual, with a smile.",          model: "images/model-teatime.jpg",   image: "images/teatime-plain-tea-two-sugars-green.jpg" }
 ];
 

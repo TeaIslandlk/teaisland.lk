@@ -29,8 +29,8 @@
     const col = COLLECTIONS.find(c => c.tag === tag);
     const picks = PRODUCTS.filter(p => p.tag === tag && (p.images.white || p.images.green));
     // choose the product whose flat image is the collection's hero image, else the first
-    const p = picks.find(x => Object.values(x.images).includes(col.image)) || picks[0];
-    return { tag, p, model: col.model, flat: col.image };
+    const p = picks.find(x => x.id === col.heroProduct) || picks.find(x => Object.values(x.images).includes(col.image)) || picks[0];
+    return { tag, p, model: col.hero || col.model, flat: col.image };
   });
   const stack = $("#heroStack");
   stack.innerHTML = heroCards.map((c, i) => `
