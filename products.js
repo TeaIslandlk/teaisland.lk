@@ -87,11 +87,11 @@ const PRODUCTS = [
 // Shop order: one line per design, colours left to right (White, Black, Forest Green).
 // "start" = who is on the left of that line ("m" boy, "w" girl); the line then alternates boy / girl.
 const SHOP_ORDER = [
-  { id: "sprout",      start: "m" },   // 1
+  { id: "sprout",      start: "m" },   // 1  The Sprout
   { id: "bud1",        start: "w" },   // 2  Golden Bud
-  { id: "bud2",        start: "m" },   // 2  Golden Burst
-  { id: "leaf",        start: "m" },   // 3
+  { id: "leaf",        start: "m" },   // 3  The Leaf
   { id: "the-pour",    start: "w" },   // 4  Tea Time
-  { id: "tea-blossom", start: "m" },   // 5
-  { id: "bud3",        start: "m" }    // 6  Golden Sprig (only Man B white and Woman B black exist, so M-W-M is the closest)
+  { id: "tea-blossom", start: "m" },   // 5  Tea Blossom
+  { id: "bud3",        start: "m" },   // 6  Golden Sprig (wanted W-M-W, but only Man B white and Woman B black exist, so M-W-M is the closest)
+  { id: "bud2",        start: "m" }    // 7  Golden Burst
 ];
