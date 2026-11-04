@@ -43,7 +43,7 @@ const COLOURS = {
 const COLLECTIONS = [
   { tag: "Signature",    line: "Our mark, in minimal tea line art.",      model: "images/shop-signature-green.jpg", image: "images/shop-signature-green.jpg" },
   { tag: "Golden Buds",  line: "Hand-painted gold tea buds.",              model: "images/shop-buds-white.jpg",      image: "images/shop-buds-white.jpg" },
-  { tag: "Botanical",    line: "The tea flower, in full colour.",          model: "images/shop-botanical-white.jpg", image: "images/shop-botanical-white.jpg" },
+  { tag: "Blossom",    line: "The tea flower, in full colour.",          model: "images/shop-botanical-white.jpg", image: "images/shop-botanical-white.jpg" },
   { tag: "Tea Time",     line: "The tea ritual, with a smile.",            model: "images/shop-teatime-green.jpg",   image: "images/shop-teatime-green.jpg" }
 ];
 
@@ -52,7 +52,7 @@ const HERO = [
   { tag: "Signature",   name: "The Sprout",  img: "images/shop-signature-green.jpg" },
   { tag: "Tea Time",    name: "Say When",    img: "images/shop-teatime-green.jpg" },
   { tag: "Golden Buds", name: "Golden Bud",  img: "images/shop-buds-white.jpg" },
-  { tag: "Botanical",   name: "Tea Blossom", img: "images/shop-botanical-white.jpg" }
+  { tag: "Blossom",   name: "Tea Blossom", img: "images/shop-botanical-white.jpg" }
 ];
 
 // Products: one per theme, each in White, Black and Forest Green.
@@ -60,7 +60,7 @@ const PRODUCTS = [
   { id: "sprout", tag: "Signature", name: "The Sprout", line: "Two leaves, one stem. Our mark.",
     desc: "The Tea Island Sprout, drawn in a single minimal line. Printed A4-size on the chest. Black comes printed in gold.", price: 3290,
     images: { white: "images/shop-signature-white.jpg", black: "images/shop-signature-black.jpg", green: "images/shop-signature-green.jpg" } },
-  { id: "tea-blossom", tag: "Botanical", name: "Tea Blossom", line: "The tea flower, in full colour.",
+  { id: "tea-blossom", tag: "Blossom", name: "Tea Blossom", line: "The tea flower, in full colour.",
     desc: "A flowering tea branch, true to life, in full colour. Printed A4-size on the chest.", price: 3490,
     images: { white: "images/shop-botanical-white.jpg", black: "images/shop-botanical-black.jpg", green: "images/shop-botanical-green.jpg" } },
   { id: "golden-bud", tag: "Golden Buds", name: "Golden Bud", line: "Hand-painted gold tea bud.",
