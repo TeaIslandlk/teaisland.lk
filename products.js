@@ -42,8 +42,8 @@ const COLOURS = {
 // "image" = flat mockup, used automatically until the model photo exists.
 const COLLECTIONS = [
   { tag: "Signature",    line: "Our mark, in minimal tea line art.",      model: "images/shop-signature-green.jpg", image: "images/shop-signature-green.jpg" },
-  { tag: "Botanical",    line: "The tea flower, in full colour.",          model: "images/shop-botanical-white.jpg", image: "images/shop-botanical-white.jpg" },
   { tag: "Golden Buds",  line: "Hand-painted gold tea buds.",              model: "images/shop-buds-white.jpg",      image: "images/shop-buds-white.jpg" },
+  { tag: "Botanical",    line: "The tea flower, in full colour.",          model: "images/shop-botanical-white.jpg", image: "images/shop-botanical-white.jpg" },
   { tag: "Tea Time",     line: "The tea ritual, with a smile.",            model: "images/shop-teatime-green.jpg",   image: "images/shop-teatime-green.jpg" }
 ];
 
