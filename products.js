@@ -10,13 +10,13 @@ const STORE = {
   whatsappDisplay: "071 655 6155",
   currency: "LKR",
   deliveryFee: 450,                 // flat island-wide delivery fee
-  freeDeliveryOver: 10000,          // free delivery above this subtotal (0 = never free)
+  freeDeliveryOver: 9800,           // free delivery from this subtotal (0 = never free); 9,800 = 2 tees at LKR 4,900
   sizes: ["S", "M", "L", "XL", "XXL"],
   tiktok: "https://www.tiktok.com/@teaislandfy",
   instagram: "",                    // add the Instagram link here when the account is ready
   facebook: "",                     // add the Facebook Page link here
 
-  announcement: "Now taking pre-orders on WhatsApp  ·  Prepaid by bank transfer  ·  Island-wide delivery",
+  announcement: "Now taking pre-orders on WhatsApp  ·  Prepaid by bank transfer  ·  Free delivery on 2 or more tees",
 
   // Shown in the bag and added to the WhatsApp order message once filled in.
   bank: { bankName: "", accountName: "", accountNumber: "", branch: "" },

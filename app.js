@@ -268,7 +268,8 @@
     const t = totals();
     $("#cartSum").innerHTML = `<div><span>Subtotal</span><span>${fmt(t.sub)}</span></div>
       <div><span>Delivery</span><span>${t.ship ? fmt(t.ship) : "Free"}</span></div>
-      <div class="tot"><span>Total</span><span>${fmt(t.total)}</span></div>`;
+      <div class="tot"><span>Total</span><span>${fmt(t.total)}</span></div>` +
+      (t.ship && STORE.freeDeliveryOver ? `<p class="nudge">Add ${fmt(STORE.freeDeliveryOver - t.sub)} more to get free delivery.</p>` : "");
   }
   $("#cartItems").addEventListener("click", e => {
     const d = e.target.closest("[data-d]"), r = e.target.closest("[data-rm]");

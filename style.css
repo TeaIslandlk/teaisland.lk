@@ -152,3 +152,4 @@ h1,h2,h3,.brand span{font-family:"Cormorant Garamond",Georgia,serif;font-weight:
 .thumb.on{border-color:var(--gold);opacity:1}
 .bank{margin-top:12px;padding:12px 14px;border:1px dashed rgba(10,36,24,.35);border-radius:12px;font-size:14px;line-height:1.5}
 .quote{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:20px;color:var(--brown);margin-top:6px}
+.nudge{margin-top:8px;font-size:13.5px;color:var(--brown)}
