@@ -158,26 +158,25 @@
   const gender = f => (f.match(/-(m|w)[ab]\.jpg$/) || [])[1];
   const who = f => (f.match(/-([mw][ab])\.jpg$/) || [])[1];
   const ALT = { m: ["ma", "mb"], w: ["wa", "wb"] };
+  const CYCLE = ["ma", "wa", "mb", "wb"];
   function renderGrid() {
-    const turn = { m: 0, w: 0 };
+    let n = 0;
     const cards = SHOP_ORDER.flatMap(line => {
       const p = PRODUCTS.find(x => x.id === line.id);
       if (!p || (tagFilter !== "All" && p.tag !== tagFilter)) return [];
       const usedInLine = [];
       return colourKeys(p).filter(k => colourFilter === "All" || k === colourFilter).map((k, j) => {
-        const other = line.start === "m" ? "w" : "m";
-        const g = j % 2 === 0 ? line.start : other;
+        const want = CYCLE[n++ % 4];
+        const g = want[0];
         const list = p.images[k];
         const clean = list.filter(f => !AVOID_COVER.includes(f));
         const base = clean.some(f => gender(f) === g) ? clean : list;
         const pool = base.filter(f => gender(f) === g);
         let src;
         if (pool.length) {
-          const want = ALT[g][turn[g] % 2];
           const notUsed = pool.filter(f => !usedInLine.includes(who(f)));
           const pref = (notUsed.length ? notUsed : pool);
           src = pref.find(f => who(f) === want) || pref[0];
-          turn[g] = ALT[g].indexOf(who(src)) + 1;
         } else {
           src = (clean.length ? clean : list)[0];
         }
