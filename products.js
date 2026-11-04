@@ -75,7 +75,7 @@ const PRODUCTS = [
     images: { white: ["images/bud2-white-ma.jpg", "images/bud2-white-wb.jpg"], black: ["images/bud2-black-wa.jpg"], green: ["images/bud2-green-mb.jpg"] } },
   { id: "bud3", tag: "Golden Buds", name: "Golden Sprig", line: "Five tall gold leaves, one sprig.",
     desc: "A tall sprig of five tea leaves in gold. Printed A4-size on the chest.", price: 3990,
-    images: { white: ["images/bud3-white-mb.jpg"], black: ["images/bud3-black-wb.jpg"], green: ["images/bud3-green-ma.jpg", "images/bud3-green-wa.jpg"] } },
+    images: { white: ["images/bud3-white-wb.jpg", "images/bud3-white-mb.jpg"], black: ["images/bud3-black-ma.jpg", "images/bud3-black-wb.jpg"], green: ["images/bud3-green-ma.jpg", "images/bud3-green-wa.jpg"] } },
   { id: "tea-blossom", tag: "Blossom", name: "Tea Blossom", line: "The tea flower, in full colour.",
     desc: "A flowering tea branch, true to life, in full colour. Printed A4-size on the chest.", price: 3490,
     images: { white: ["images/blossom-white-ma.jpg", "images/blossom-white-wb.jpg", "images/blossom-white-mb.jpg", "images/blossom-white-wa.jpg"], black: ["images/blossom-black-ma.jpg", "images/blossom-black-wb.jpg", "images/blossom-black-mb.jpg", "images/blossom-black-wa.jpg"], green: ["images/blossom-green-ma.jpg", "images/blossom-green-wb.jpg", "images/blossom-green-mb.jpg", "images/blossom-green-wa.jpg"] } },
@@ -92,6 +92,6 @@ const SHOP_ORDER = [
   { id: "leaf",        start: "m" },   // 3  The Leaf
   { id: "the-pour",    start: "w" },   // 4  Tea Time
   { id: "tea-blossom", start: "m" },   // 5  Tea Blossom
-  { id: "bud3",        start: "m" },   // 6  Golden Sprig (wanted W-M-W, but only Man B white and Woman B black exist, so M-W-M is the closest)
+  { id: "bud3",        start: "w" },   // 6  Golden Sprig
   { id: "bud2",        start: "m" }    // 7  Golden Burst
 ];
