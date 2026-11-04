@@ -25,26 +25,16 @@
   ].filter(Boolean).join(" · ");
 
   /* ---------- hero: 3 themes, White/Green only, auto shuffle ---------- */
-  const heroCards = HERO.map(tag => {
-    const col = COLLECTIONS.find(c => c.tag === tag);
-    const picks = PRODUCTS.filter(p => p.tag === tag && (p.images.white || p.images.green));
-    // choose the product whose flat image is the collection's hero image, else the first
-    const p = picks.find(x => x.id === col.heroProduct) || picks.find(x => Object.values(x.images).includes(col.image)) || picks[0];
-    return { tag, p, model: col.hero || col.model, flat: col.image };
-  });
   const stack = $("#heroStack");
-  stack.innerHTML = heroCards.map((c, i) => `
+  stack.innerHTML = HERO.map((c, i) => `
     <figure class="hcard" data-i="${i}">
-      ${img(c.model, c.flat, c.p.name, "")}
-      <figcaption><span>${c.tag}</span><b>${esc(c.p.name)}</b></figcaption>
+      ${img(c.img, "", c.name)}
+      <figcaption><span>${c.tag}</span><b>${esc(c.name)}</b></figcaption>
     </figure>`).join("");
   let front = 0;
   const hc = [...stack.querySelectorAll(".hcard")];
   function layout() {
-    hc.forEach((el, i) => {
-      const pos = (i - front + hc.length) % hc.length; // 0 front, 1 mid, 2 back
-      el.dataset.pos = pos;
-    });
+    hc.forEach((el, i) => { el.dataset.pos = Math.min((i - front + hc.length) % hc.length, 3); });
   }
   layout();
   let timer;

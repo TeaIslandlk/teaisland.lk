@@ -39,6 +39,7 @@ h1,h2,h3,.brand span{font-family:"Cormorant Garamond",Georgia,serif;font-weight:
 .hcard[data-pos="0"]{transform:translateX(-50%) rotate(0);z-index:3}
 .hcard[data-pos="0"] figcaption{opacity:1}
 .hcard[data-pos="1"]{transform:translateX(-12%) rotate(7deg) scale(.92);z-index:2;filter:brightness(.8)}
+.hcard[data-pos="3"]{transform:translateX(-50%) scale(.8);z-index:0;opacity:0;pointer-events:none}
 .hcard[data-pos="2"]{transform:translateX(-88%) rotate(-7deg) scale(.92);z-index:1;filter:brightness(.7)}
 
 .trust{display:grid;grid-template-columns:repeat(3,1fr);background:var(--night);color:var(--mist);text-align:center}

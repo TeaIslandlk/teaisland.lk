@@ -47,8 +47,13 @@ const COLLECTIONS = [
   { tag: "Tea Time",  line: "The tea ritual, with a smile.",          model: "images/model-teatime.jpg",   image: "images/teatime-plain-tea-two-sugars-green.jpg" }
 ];
 
-// Hero: one tee per theme, White and Green only, shuffled automatically
-const HERO = ["Signature", "Botanical", "Tea Time"];
+// Hero: all four models; three show at once and the set shuffles automatically
+const HERO = [
+  { tag: "Signature", name: "The Sprout",      img: "images/model-signature.jpg" },
+  { tag: "Tea Time",  name: "Say When",        img: "images/model-teatime.jpg" },
+  { tag: "Botanical", name: "Leaf Collection", img: "images/model-botanical-2.jpg" },
+  { tag: "Botanical", name: "Tea Blossom",     img: "images/model-botanical.jpg" }
+];
 
 // Products. "images" lists one photo per colour the tee comes in.
 // badge (optional): small label on the card, e.g. "New" or "Limited"
