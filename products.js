@@ -43,7 +43,7 @@ const COLOURS = {
 const COLLECTIONS = [
   { tag: "Signature",    line: "Our mark, in minimal tea line art.",      model: "images/shop-signature-green.jpg", image: "images/shop-signature-green.jpg" },
   { tag: "Golden Buds",  line: "Hand-painted gold tea buds.",              model: "images/shop-buds-white.jpg",      image: "images/shop-buds-white.jpg" },
-  { tag: "Blossom",    line: "The tea flower, in full colour.",          model: "images/shop-botanical-white.jpg", image: "images/shop-botanical-white.jpg" },
+  { tag: "Blossom",    line: "The tea flower, in full colour.",          model: "images/shop-botanical-green.jpg", image: "images/shop-botanical-green.jpg" },
   { tag: "Tea Time",     line: "The tea ritual, with a smile.",            model: "images/shop-teatime-green.jpg",   image: "images/shop-teatime-green.jpg" }
 ];
 
@@ -51,7 +51,7 @@ const COLLECTIONS = [
 const HERO = [
   { tag: "Signature",   name: "The Sprout",  img: "images/shop-signature-green.jpg" },
   { tag: "Tea Time",    name: "Say When",    img: "images/shop-teatime-green.jpg" },
-  { tag: "Golden Buds", name: "Golden Bud",  img: "images/shop-buds-white.jpg" },
+  { tag: "Golden Buds", name: "Golden Bud",  img: "images/shop-buds-black.jpg" },
   { tag: "Blossom",   name: "Tea Blossom", img: "images/shop-botanical-white.jpg" }
 ];
 
