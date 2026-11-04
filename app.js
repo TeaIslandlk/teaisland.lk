@@ -52,7 +52,7 @@
     const n = PRODUCTS.filter(p => p.tag === c.tag).length;
     return `<a class="tile" href="#shop" data-tag="${c.tag}">
       ${img(c.model, c.image, c.tag + " collection")}
-      <div class="tile-txt"><h3>${c.tag}</h3><p>${c.line}</p><span>${n} tee${n > 1 ? "s" : ""} →</span></div>
+      <div class="tile-txt"><h3>${c.tag}</h3><p>${c.line}</p><span>3 colours →</span></div>
     </a>`;
   }).join("");
   $("#tiles").addEventListener("click", e => {
@@ -72,16 +72,16 @@
   $("#colourChips").addEventListener("click", e => { const b = e.target.closest("[data-col]"); if (b) { colourFilter = b.dataset.col; renderChips(); renderGrid(); } });
 
   function renderGrid() {
-    const list = PRODUCTS.filter(p => (tagFilter === "All" || p.tag === tagFilter) && (colourFilter === "All" || p.images[colourFilter]));
-    $("#grid").innerHTML = list.length ? list.map(p => {
-      const key = colourFilter !== "All" ? colourFilter : colourKeys(p)[0];
-      return `<article class="card" data-id="${p.id}" data-col="${key}" tabindex="0">
-        <div class="card-img">${img(p.images[key], "", p.name)}${p.badge ? `<span class="badge">${p.badge}</span>` : ""}${p.soldOut ? `<span class="badge out">Sold out</span>` : ""}</div>
-        <div class="card-info"><small>${p.tag}</small><h3>${esc(p.name)}</h3>
-          <div class="card-foot"><b>${fmt(p.price)}</b>
-            <span class="mini">${colourKeys(p).map(k => `<i style="--c:${COLOURS[k].hex}"></i>`).join("")}</span></div></div>
-      </article>`;
-    }).join("") : `<p class="empty">No tees match that combination yet.</p>`;
+    const rows = COLLECTIONS.filter(c => tagFilter === "All" || c.tag === tagFilter).map(c => {
+      const cards = PRODUCTS.filter(p => p.tag === c.tag).flatMap(p =>
+        colourKeys(p).filter(k => colourFilter === "All" || k === colourFilter).map(k => `<article class="card" data-id="${p.id}" data-col="${k}" tabindex="0">
+        <div class="card-img">${img(p.images[k], "", p.name + " in " + COLOURS[k].name)}${p.soldOut ? `<span class="badge out">Sold out</span>` : ""}</div>
+        <div class="card-info"><small>${COLOURS[k].name}</small><h3>${esc(p.name)}</h3>
+          <div class="card-foot"><b>${fmt(p.price)}</b><span class="mini"><i style="--c:${COLOURS[k].hex}"></i></span></div></div>
+      </article>`)).join("");
+      return cards ? `<div class="theme-row"><div class="theme-head"><h3>${c.tag}</h3><p>${c.line}</p></div><div class="theme-cards">${cards}</div></div>` : "";
+    }).join("");
+    $("#grid").innerHTML = rows || `<p class="empty">No tees match that combination yet.</p>`;
   }
   $("#grid").addEventListener("click", e => { const c = e.target.closest(".card"); if (c) openProduct(c.dataset.id, c.dataset.col); });
   $("#grid").addEventListener("keydown", e => { if (e.key === "Enter") { const c = e.target.closest(".card"); if (c) openProduct(c.dataset.id, c.dataset.col); } });
