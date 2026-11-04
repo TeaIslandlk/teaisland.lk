@@ -153,23 +153,35 @@
   $("#tagChips").addEventListener("click", e => { const b = e.target.closest("[data-tag]"); if (b) { tagFilter = b.dataset.tag; renderChips(); renderGrid(); } });
   $("#colourChips").addEventListener("click", e => { const b = e.target.closest("[data-col]"); if (b) { colourFilter = b.dataset.col; renderChips(); renderGrid(); } });
 
-  // Cover photo for a card: the boy or girl the line asks for (never a busy-background photo when another exists).
+  // Cover photo for a card. The line says boy or girl; the person alternates (Man A, Man B, Man A ... / Woman A, Woman B ...)
+  // across the whole grid, so the same man or woman never sits twice in one line and the next line starts with the other one.
   const gender = f => (f.match(/-(m|w)[ab]\.jpg$/) || [])[1];
-  function cover(list, want, n) {
-    const ok = list.filter(f => !AVOID_COVER.includes(f));
-    const pick = pool => pool[n % pool.length];
-    let pool = ok.filter(f => gender(f) === want);
-    if (!pool.length) pool = list.filter(f => gender(f) === want);
-    if (pool.length) return pick(pool);
-    return (ok.length ? ok : list)[0];
-  }
+  const who = f => (f.match(/-([mw][ab])\.jpg$/) || [])[1];
+  const ALT = { m: ["ma", "mb"], w: ["wa", "wb"] };
   function renderGrid() {
-    const cards = SHOP_ORDER.flatMap((line, li) => {
+    const turn = { m: 0, w: 0 };
+    const cards = SHOP_ORDER.flatMap(line => {
       const p = PRODUCTS.find(x => x.id === line.id);
       if (!p || (tagFilter !== "All" && p.tag !== tagFilter)) return [];
+      const usedInLine = [];
       return colourKeys(p).filter(k => colourFilter === "All" || k === colourFilter).map((k, j) => {
         const other = line.start === "m" ? "w" : "m";
-        const src = cover(p.images[k], j % 2 === 0 ? line.start : other, li + j);
+        const g = j % 2 === 0 ? line.start : other;
+        const list = p.images[k];
+        const clean = list.filter(f => !AVOID_COVER.includes(f));
+        const base = clean.some(f => gender(f) === g) ? clean : list;
+        const pool = base.filter(f => gender(f) === g);
+        let src;
+        if (pool.length) {
+          const want = ALT[g][turn[g] % 2];
+          const notUsed = pool.filter(f => !usedInLine.includes(who(f)));
+          const pref = (notUsed.length ? notUsed : pool);
+          src = pref.find(f => who(f) === want) || pref[0];
+          turn[g] = ALT[g].indexOf(who(src)) + 1;
+        } else {
+          src = (clean.length ? clean : list)[0];
+        }
+        usedInLine.push(who(src));
         return `<article class="card" data-id="${p.id}" data-col="${k}" data-img="${src}" tabindex="0">
         <div class="card-img">${img(src, "", p.name + " in " + COLOURS[k].name)}${p.soldOut ? `<span class="badge out">Sold out</span>` : ""}</div>
         <div class="card-info"><small>${p.tag} · ${COLOURS[k].name}</small><h3>${esc(p.name)}</h3>
