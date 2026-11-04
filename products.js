@@ -62,25 +62,25 @@ const AVOID_COVER = ["images/bud1-black-ma.jpg", "images/bud2-black-wa.jpg", "im
 // images[colour] = every model photo of that tee (the first is a fallback; the shop picks the cover so boys and girls alternate).
 const PRODUCTS = [
   { id: "sprout", tag: "Signature", name: "The Sprout", line: "Two leaves, one stem. Our mark.",
-    desc: "The Tea Island Sprout, drawn in a single minimal line. Printed A4-size on the chest. Dark green on White, gold on Black, cream on Forest Green.", price: 3290,
+    desc: "The Tea Island Sprout, drawn in a single minimal line. Printed A4-size on the chest. Dark green on White, gold on Black, cream on Forest Green.", price: 4900,
     images: { white: ["images/sprout-white-ma.jpg", "images/sprout-white-wb.jpg", "images/sprout-white-mb.jpg", "images/sprout-white-wa.jpg"], black: ["images/sprout-black-ma.jpg", "images/sprout-black-wb.jpg", "images/sprout-black-mb.jpg", "images/sprout-black-wa.jpg"], green: ["images/sprout-green-ma.jpg", "images/sprout-green-wb.jpg", "images/sprout-green-mb.jpg", "images/sprout-green-wa.jpg"] } },
   { id: "leaf", tag: "Signature", name: "The Leaf", line: "Nine leaves, one quiet grid.",
-    desc: "Nine fine leaf outlines in a 3 x 3 grid. Printed A4-size on the chest. Dark green on White, gold on Black, pale gold on Forest Green.", price: 3290,
+    desc: "Nine fine leaf outlines in a 3 x 3 grid. Printed A4-size on the chest. Dark green on White, gold on Black, pale gold on Forest Green.", price: 4900,
     images: { white: ["images/leaf-white-ma.jpg", "images/leaf-white-wb.jpg", "images/leaf-white-mb.jpg", "images/leaf-white-wa.jpg"], black: ["images/leaf-black-ma.jpg", "images/leaf-black-wb.jpg", "images/leaf-black-mb.jpg", "images/leaf-black-wa.jpg"], green: ["images/leaf-green-ma.jpg", "images/leaf-green-wb.jpg", "images/leaf-green-mb.jpg", "images/leaf-green-wa.jpg"] } },
   { id: "bud1", tag: "Golden Buds", name: "Golden Bud", line: "A single gold bud, drawn clean.",
-    desc: "A simple three-leaf tea bud in flat gold. Printed A4-size on the chest.", price: 3990,
+    desc: "A simple three-leaf tea bud in flat gold. Printed A4-size on the chest.", price: 4900,
     images: { white: ["images/bud1-white-wa.jpg"], black: ["images/bud1-black-ma.jpg", "images/bud1-black-mb.jpg"], green: ["images/bud1-green-wb.jpg"] } },
   { id: "bud2", tag: "Golden Buds", name: "Golden Burst", line: "Gold watercolour leaves in bloom.",
-    desc: "A burst of tea leaves in gold watercolour. Printed A4-size on the chest.", price: 3990,
+    desc: "A burst of tea leaves in gold watercolour. Printed A4-size on the chest.", price: 4900,
     images: { white: ["images/bud2-white-ma.jpg", "images/bud2-white-wb.jpg"], black: ["images/bud2-black-wa.jpg"], green: ["images/bud2-green-mb.jpg"] } },
   { id: "bud3", tag: "Golden Buds", name: "Golden Sprig", line: "Five tall gold leaves, one sprig.",
-    desc: "A tall sprig of five tea leaves in gold. Printed A4-size on the chest.", price: 3990,
+    desc: "A tall sprig of five tea leaves in gold. Printed A4-size on the chest.", price: 4900,
     images: { white: ["images/bud3-white-wb.jpg", "images/bud3-white-mb.jpg"], black: ["images/bud3-black-ma.jpg", "images/bud3-black-wb.jpg"], green: ["images/bud3-green-ma.jpg", "images/bud3-green-wa.jpg"] } },
   { id: "tea-blossom", tag: "Blossom", name: "Tea Blossom", line: "The tea flower, in full colour.",
-    desc: "A flowering tea branch, true to life, in full colour. Printed A4-size on the chest.", price: 3490,
+    desc: "A flowering tea branch, true to life, in full colour. Printed A4-size on the chest.", price: 4900,
     images: { white: ["images/blossom-white-ma.jpg", "images/blossom-white-wb.jpg", "images/blossom-white-mb.jpg", "images/blossom-white-wa.jpg"], black: ["images/blossom-black-ma.jpg", "images/blossom-black-wb.jpg", "images/blossom-black-mb.jpg", "images/blossom-black-wa.jpg"], green: ["images/blossom-green-ma.jpg", "images/blossom-green-wb.jpg", "images/blossom-green-mb.jpg", "images/blossom-green-wa.jpg"] } },
   { id: "the-pour", tag: "Tea Time", name: "Tea Time", line: "Tea, poured with a smile.",
-    desc: "A watercolour teapot pouring into a splashing cup. No words, just the ritual. Printed A4-size on the chest.", price: 3290,
+    desc: "A watercolour teapot pouring into a splashing cup. No words, just the ritual. Printed A4-size on the chest.", price: 4900,
     images: { white: ["images/teatime-white-ma.jpg", "images/teatime-white-wb.jpg", "images/teatime-white-mb.jpg", "images/teatime-white-wa.jpg"], black: ["images/teatime-black-ma.jpg", "images/teatime-black-wb.jpg", "images/teatime-black-mb.jpg", "images/teatime-black-wa.jpg"], green: ["images/teatime-green-ma.jpg", "images/teatime-green-wb.jpg", "images/teatime-green-mb.jpg", "images/teatime-green-wa.jpg"] } }
 ];
 
