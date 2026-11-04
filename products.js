@@ -47,12 +47,12 @@ const COLLECTIONS = [
   { tag: "Tea Time",     line: "The tea ritual, with a smile.",            model: "images/shop-teatime-green.jpg",   image: "images/shop-teatime-green.jpg" }
 ];
 
-// Hero: models rotate automatically, three show at once
+// Hero: Man B + Woman A only. The collection tiles use Man A + Woman B, so nobody appears in both places.
 const HERO = [
-  { tag: "Signature",   name: "The Sprout",  img: "images/shop-signature-green.jpg" },
-  { tag: "Tea Time",    name: "Say When",    img: "images/shop-teatime-green.jpg" },
-  { tag: "Golden Buds", name: "Golden Bud",  img: "images/shop-buds-black.jpg" },
-  { tag: "Blossom",   name: "Tea Blossom", img: "images/shop-botanical-white.jpg" }
+  { tag: "Signature",   name: "The Sprout",  img: "images/hero-sprout-manb.jpg" },
+  { tag: "Blossom",     name: "Tea Blossom", img: "images/shop-botanical-white.jpg" },
+  { tag: "Golden Buds", name: "Golden Bud",  img: "images/hero-bud-manb.jpg" },
+  { tag: "Tea Time",    name: "Say When",    img: "images/hero-saywhen-womana.jpg" }
 ];
 
 // Products: one per theme, each in White, Black and Forest Green.
